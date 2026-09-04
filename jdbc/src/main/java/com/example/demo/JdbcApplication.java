@@ -44,11 +44,11 @@ public class JdbcApplication implements ApplicationRunner {
 //        log.info("{}",member);
 
         //findByAgeGreaterThan
-//        var member = memberRepository.findByAgeGreaterThan(20);
-//        log.info("{}",member);
+        var member = memberRepository.findByAgeGreaterThan(20);
+        log.info("{}",member);
 
-        //삭제
-        memberRepository.deleteById(5L);
-        log.info("회원 삭제 완료 : id = {}", 5L);
+//        //삭제
+//        memberRepository.deleteById(5L);
+//        log.info("회원 삭제 완료 : id = {}", 5L);
     }
 }
