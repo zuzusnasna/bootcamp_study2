@@ -1,6 +1,6 @@
 # Spring Boot Bootcamp Study
 
-부트캠프에서 배우는 Java와 Spring Boot 내용을 정리하는 저장소입니다.
+
 
 ## 📚 날짜별 학습 기록
 
