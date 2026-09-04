@@ -15,17 +15,40 @@ public class JdbcApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        memberRepository.save(Member.builder()
-                .name("자비스")
-                .email("javis@naver.com")
-                .age(23).build());
+        //insert
+//        memberRepository.save(Member.builder()
+//                .name("자비스")
+//                .email("zavis@naver.com")
+//                .age(23).build());
+//
+//        //update
+//        Member member = Member.builder()
+//                .name("원이")
+//                .email("onee@naver.com")
+//                .age(23).build();
+//        memberRepository.save(member);
+//
+//        var members =  memberRepository.findAll();
+//        log.info("{}", members);
+//
+//        member.setAge(11);
+//        memberRepository.save(member);
+//        log.info("{}",member);
 
-        memberRepository.save(Member.builder()
-                .name("원이")
-                .email("one2@naver.com")
-                .age(21).build());
+        //find all members
+//        var members = memberRepository.findAll();
+//        log.info("{}",members);
 
-        var members =  memberRepository.findAll();
-        log.info("{}", members);
+        //find member by id
+//        var member = memberRepository.findById(1L);
+//        log.info("{}",member);
+
+        //findByAgeGreaterThan
+//        var member = memberRepository.findByAgeGreaterThan(20);
+//        log.info("{}",member);
+
+        //삭제
+        memberRepository.deleteById(5L);
+        log.info("회원 삭제 완료 : id = {}", 5L);
     }
 }
