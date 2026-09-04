@@ -14,6 +14,7 @@ public interface MemberRepository extends CrudRepository<Member, Long> {
     //전체 개수 조회 : count()
 
     List<Member> findByName(String name);
-    List<Member> findByEmail(String email);
+    Member findByEmail(String email);
     List<Member> findByAgeGreaterThan(Integer age);
+    List<Member> findByNameAndEmail(String name, String email);
 }
