@@ -58,4 +58,14 @@ public class ArticleService {
         return mapToArticleResponse(article);
     }
 
+    public ArticleResponse update(Long id, ArticleRequest articleRequest) {
+        Article article = articleRepository.findById(id).orElseThrow(NotFoundException::new);
+        article.setTitle(articleRequest.getTitle());
+        article.setDescription(articleRequest.getDescription());;
+        articleRepository.save(article);
+        return mapToArticleResponse(article);
+    }
+
+
+
 }

@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ArticleRequest;
 import com.example.demo.dto.ArticleResponse;
 import com.example.demo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,4 +36,11 @@ public class ArticleController {
     public ArticleResponse get(@PathVariable("id") Long id) {
         return articleService.findById(id);
     }
-}
+
+    @PutMapping("/{id}")
+    public ArticleResponse put(@PathVariable("id") Long id,
+                               @RequestBody ArticleRequest articleRequest) {
+        return articleService.update(id, articleRequest);
+    }
+
+    }
