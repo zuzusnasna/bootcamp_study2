@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.MemberRequest;
 import com.example.demo.dto.MemberResponse;
+import com.example.demo.entity.Member;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,23 +26,18 @@ public class MemberController {
 
     //id 로 검색 , 수정 , 삭제 기능 추가
 
-    @GetMapping("/{id}") // id 검색
-    public MemberResponse get(@PathVariable("id") Long id) {
+    @GetMapping("/{id}")
+    public MemberResponse getMember(@PathVariable Long id) {
         return memberService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public MemberResponse put(@PathVariable("id") Long id, @RequestBody MemberRequest memberRequest) {
-        return memberService.update(id, memberRequest);
+    public MemberResponse updateMember(@PathVariable Long id, @RequestBody Member member) {
+        return memberService.update(id, member);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        memberService.deleteById(id);
-    }
-
-    @PatchMapping("/{id}")
-    public MemberResponse patch(@PathVariable("id") Long id, @RequestBody MemberRequest memberRequest){
-        return memberService.patch(id, memberRequest);
+    public void deleteMember(@PathVariable Long id) {
+        memberService.delete(id);
     }
 }

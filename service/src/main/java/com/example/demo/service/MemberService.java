@@ -7,7 +7,6 @@ import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,11 +50,7 @@ public class MemberService {
                 .age(member.getAge()).build();
     }
 
-    public MemberResponse patch(Long id, MemberRequest memberRequest){
-        Member member = MemberResponse.findById(id).orElseThrow(NotFoundException::new);
 
-
-    }
 
     //id 검색
     public MemberResponse findById(Long id) {
@@ -64,7 +59,7 @@ public class MemberService {
     }
 
     //수정
-    public MemberResponse update(Long id, MemberRequest memberRequest) {
+    public MemberResponse update(Long id, Member memberRequest) {
         Member member = memberRepository.findById(id).orElseThrow(NotFoundException::new);
         member.setName(memberRequest.getName());
         member.setEmail(memberRequest.getEmail());
@@ -74,8 +69,9 @@ public class MemberService {
     }
 
     //삭제
-    public void deleteById(Long id){
+    public void delete(Long id){
         MemberRepository.findById(id);
         memberRepository.delete(member);
     }
+
 }
