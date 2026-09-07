@@ -11,13 +11,15 @@
 
 ## 📂 실습 코드
 
-| 폴더      | 내용         |
-|-----------|--------------|
-| `aop`     | AOP 실습     |
-| `di`      | DI 실습      |
-| `lombok`  | Lombok 실습  |
-| `JDBC`    | JDBC 실습    |
-| `myBatis` | MyBatis 실습 |
+| 폴더      | 내용                |
+|-----------|---------------------|
+| `aop`     | AOP 실습            |
+| `di`      | DI 실습             |
+| `lombok`  | Lombok 실습         |
+| `JDBC`    | JDBC 실습           |
+| `myBatis` | MyBatis 실습        |
+| 'service'  | Jpa를통한 CRUD 실습 |
+
 
 ## 🛠️ 개발 환경
 
