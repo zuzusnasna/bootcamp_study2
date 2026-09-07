@@ -34,16 +34,11 @@ public class MemberController {
 
 
     @GetMapping("{id}/articles")
-    public void getArticle(@PathVariable("id") Long id, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("/api/articles?memberId=" + id);
-    }
-
-    @GetMapping("{id}/articles")
     public void getArticle(@PathVariable("id") Long id, HttpServletRequest request , HttpServletResponse response)
             throws ServletException, IOException {
         request.getSession()
                 .getServletContext()
-                .getRequestDispatcher("/ap/articles?memberId=" + id)
+                .getRequestDispatcher("/api/articles?memberId=" + id)
                 .forward(request, response);
     }
 
