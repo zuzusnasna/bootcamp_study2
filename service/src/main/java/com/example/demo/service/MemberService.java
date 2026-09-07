@@ -59,7 +59,7 @@ public class MemberService {
     }
 
     //수정
-    public MemberResponse update(Long id, Member memberRequest) {
+    public MemberResponse update(Long id, MemberRequest memberRequest) {
         Member member = memberRepository.findById(id).orElseThrow(NotFoundException::new);
         member.setName(memberRequest.getName());
         member.setEmail(memberRequest.getEmail());
@@ -70,8 +70,8 @@ public class MemberService {
 
     //삭제
     public void delete(Long id){
-        MemberRepository.findById(id);
+        Member member = memberRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
         memberRepository.delete(member);
     }
-
 }
