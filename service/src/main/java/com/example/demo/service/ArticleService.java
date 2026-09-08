@@ -154,4 +154,9 @@ public class ArticleService {
 
         return mapToArticleResponse(article);
     }
+
+    public void delete(Long id){
+        Article article = articleRepository.findById(id).orElseThrow(NotFoundException::new);
+        articleRepository.delete(article);
+    }
 }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 회원 정보를 DB 테이블과 연결하는 JPA Entity.
  *
@@ -49,4 +51,7 @@ public class Member {
 
     // 계정 활성화 여부. true이면 활성화된 계정으로 사용할 수 있다.
     private boolean enabled;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    //회원 삭제시 게시글도 자동 삭제
+    private List<Article> articles;
 }

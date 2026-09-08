@@ -57,5 +57,6 @@ public class Article {
      * 여러 Article이 하나의 Member를 참조할 수 있으므로 ManyToOne이다.
      */
     @ManyToOne
+    @JoinColumn(name = "member_id")
     private Member member;
 }

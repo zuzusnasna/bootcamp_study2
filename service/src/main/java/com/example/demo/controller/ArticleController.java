@@ -80,4 +80,8 @@ public class ArticleController {
         return articleService.update(id, articleRequest);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id")Long id){
+        articleService.delete(id);
+    }
 }
