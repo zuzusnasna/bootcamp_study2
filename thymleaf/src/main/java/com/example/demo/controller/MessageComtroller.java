@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MessageComtroller {
     @GetMapping("/message/basic")
     public String getMessageBasic(){
-        return "/message/message-basic";
+        return "message/message-basic";
     }
 }
