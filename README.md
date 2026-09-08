@@ -36,15 +36,15 @@ Spring Boot
 
 ## 💻 Practice Code
 
-| 폴더 | 내용 |
-|---|---|
-| `aop` | AOP 실습 |
-| `di` | DI / IoC 실습 |
-| `jdbc` | JDBC 실습 |
-| `jpa` | JPA 실습 |
-| `lombok` | Lombok 실습 |
-| `mybatis` | MyBatis 실습 |
-| `service` | Spring Data JPA 기반 CRUD 실습 |
+| 폴더 | 내용                                        |
+|---|---------------------------------------------|
+| `aop` | AOP 실습                                    |
+| `di` | DI / IoC 실습                               |
+| `jdbc` | JDBC 실습                                   |
+| `jpa` | JPA 실습                                    |
+| `lombok` | Lombok 실습                                 |
+| `mybatis` | MyBatis 실습                                |
+| `service` | Spring Data JPA 기반 CRUD 실습 / RestfulAPI |
 
 ---
 
