@@ -18,7 +18,17 @@ public class MemberService {
     private final AuthorityRepository authorityRepository;
 
     public MemberDTO findById(Long Id){
-        Member member =memberRepository.findById()
+        return memberRepository.findById(Id)
+                .map(this::mapToMemberDTO)
+                .orElseThrow();
+    }
+
+    private MemberDTO mapToMemberDTO(Member member){
+        return MemberDTO.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .email(member.getEmail())
+                .build();
     }
 
 }
