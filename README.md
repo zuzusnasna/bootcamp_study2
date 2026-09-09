@@ -18,9 +18,10 @@ Spring Boot
   ├─ JDBC
   ├─ MyBatis
   ├─ JPA
-  └─ Thymeleaf
+  ├─ Thymeleaf / Spring MVC
+  └─ Spring Security
        ↓
-     CRUD / Web MVC
+     CRUD / 인증·인가
 ```
 
 ---
@@ -32,7 +33,8 @@ Spring Boot
 | [2026-09-03](./study/2026-09-03.md) | AOP · DI · Lombok |
 | [2026-09-04](./study/2026-09-04.md) | JDBC · MyBatis |
 | [2026-09-07](./study/2026-09-07.md) | JPA · CRUD |
-| [2026-09-08](./study/2026-09-08.md) | JSP · MVC · RESTful API · Thymeleaf |
+| [2026-09-08](./study/2026-09-08.md) | JSP · MVC · RESTful API · Thymeleaf · JPA 연관관계 |
+| [2026-09-09](./study/2026-09-09.md) | 회원 수정 · Spring Security 인증/인가 · UserDetailsService · BCrypt |
 
 ---
 
@@ -40,14 +42,17 @@ Spring Boot
 
 | 폴더 | 내용 |
 |---|---|
-| `aop` | AOP 실습 |
-| `di` | DI / IoC 실습 |
-| `jdbc` | JDBC 실습 |
-| `jpa` | JPA 실습 |
-| `lombok` | Lombok 실습 |
-| `mybatis` | MyBatis 실습 |
-| `service` | Spring Data JPA 기반 CRUD 실습 / RESTful API |
-| `thymleaf` | Thymeleaf · Spring MVC 실습 |
+| `aop` | AOP 실습 완료 |
+| `di` | DI / IoC 실습 완료 |
+| `jdbc` | JDBC 실습 완료 |
+| `jpa` | JPA 실습 완료 |
+| `lombok` | Lombok 실습 완료 |
+| `mybatis` | MyBatis 실습 완료 |
+| `service` | Spring Data JPA · RESTful API 실습 완료 |
+| `thymleaf` | Thymeleaf · Spring MVC 실습 완료 |
+| `mvc1` | Spring MVC 실습 |
+| `mvc2` | Spring MVC 실습 완료 |
+| `security1` | Spring Security 인증 · 인가 실습 완료 |
 
 ---
 
@@ -56,6 +61,7 @@ Spring Boot
 - **Language** · Java
 - **Framework** · Spring Boot
 - **Web** · Spring MVC · Thymeleaf
+- **Security** · Spring Security · Authentication · Authorization
 - **Persistence** · JPA · MyBatis · JDBC
 - **Database** · H2
 - **Build** · Gradle
@@ -75,8 +81,11 @@ bootcamp_study2/
 ├── jpa/         # JPA 실습
 ├── lombok/      # Lombok 실습
 ├── mybatis/     # MyBatis 실습
-├── service/     # Spring Data JPA CRUD 실습
-└── thymleaf/    # Thymeleaf · Spring MVC 실습
+├── service/     # Spring Data JPA · RESTful API 실습
+├── thymleaf/    # Thymeleaf · Spring MVC 실습
+├── mvc1/        # Spring MVC 실습
+├── mvc2/        # Spring MVC 실습
+└── security1/   # Spring Security 인증 · 인가 실습
 ```
 
 ---
