@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>member-edit-form</title>
+</head>
+<body>
+<form th:action="@{/member/add}" method="post">
+<!--  다음 코드 멤버아이디를 받아옴으로 계속 누적 저장 방지-->
+    <input type="hidden" name="id" th:value="${member.id}">
+    이    름:<input type="text" name = "name" th:value="${member.name}"><br>
+    이메일:<input type="text" name = "email" th:value="${member.email}"><br>
+    나    이:<input type="text" name = "age" th:value="${member.age}"><br>
+    <button>회원 정보 수정</button>
+</form>
+</body>
+</html>
