@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-// 게시글 목록 화면으로 요청을 전달하는 Controller
+// 게시글 목록과 상세 보기 화면으로 요청을 전달하는 Controller
 @Controller
 // 이 Controller의 모든 요청 URL 앞에 '/article'을 붙인다.
 @RequestMapping("/article")
@@ -50,15 +50,21 @@ public class ArticleController {
         return "article-list";
     }
 
+    // '/article/content?id=게시글ID'로 들어오는 GET 요청을 처리한다.
     @GetMapping("/content")
     public String getArticle(
+            // 요청 URL의 id 파라미터를 게시글 ID로 전달받는다.
             @RequestParam("id") Long id,
             Model model){
+
+        // 게시글 ID를 Service에 전달하여 해당 게시글을 조회한다.
+        // 조회한 ArticleDTO를 'article'이라는 이름으로 View에 전달한다.
         model.addAttribute(
                 "article",
                 articleService.findById(id)
         );
+
+        // Thymeleaf가 article-content.html 화면을 렌더링하도록 View 이름을 반환한다.
         return "article-content";
     }
-    )
 }
