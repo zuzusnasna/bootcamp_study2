@@ -164,7 +164,7 @@ public class ArticleController {
         articleService.update(articleForm);
 
         // 수정이 완료되면 수정한 게시글의 상세 화면으로 이동한다.
-        return "redirect:/article/content?id = " + articleForm.getId();
+        return "redirect:/article/content?id =" + articleForm.getId();
     }
 
     // '/article/delete?id=게시글ID'로 들어오는 GET 요청을 처리하여 게시글 삭제 작업을 요청한다.
