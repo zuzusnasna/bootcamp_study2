@@ -58,9 +58,13 @@ public class ArticleService {
                 .map(this::mapToArticleDTO);
     }
 
+    // 게시글 ID를 기준으로 특정 게시글 하나를 조회한다.
     public ArticleDTO findById(Long id){
+        // Repository에서 전달받은 ID와 일치하는 게시글을 조회한다.
         return articleRepository.findById(id)
+                // 조회된 Article Entity를 화면에서 사용할 ArticleDTO로 변환한다.
                 .map(this::mapToArticleDTO)
+                // 해당 ID의 게시글이 존재하지 않으면 예외를 발생시킨다.
                 .orElseThrow();
     }
 }
