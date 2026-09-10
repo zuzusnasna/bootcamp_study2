@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.MemberForm;
+import com.example.demo.dto.PasswordForm;
+import com.example.demo.model.MemberUserDetails;
 import com.example.demo.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 // 게시판 사이트의 기본 페이지 이동 요청을 처리하는 Controller이다.
 //
@@ -94,6 +98,41 @@ public class HomeController {
         memberService.create(memberForm);
 
         // 회원가입이 완료되면 게시판의 첫 화면으로 이동한다.
+        return "redirect:/";
+    }
+
+    @GetMapping("/password")
+    public String getPassword(
+            @ModelAttribute("password") PasswordForm passWordForm){
+        return "password";
+    }
+
+    @PostMapping("/password")
+    public String postPassword(
+            @Valid @ModelAttribute("password") PasswordForm passwordForm,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal MemberUserDetails userDetails) {
+
+        if (!memberService.checkPassword(
+                userDetails.getMemberId(),
+                passwordForm.getOld())){
+
+            bindingResult.rejectValue(
+                    "old",
+                    "MissMatch",
+                    "비밀번호가 잘못 되었습니다."
+            );
+        }
+
+        if (bindingResult.hasErrors()){
+            return "password";
+        }
+
+        memberService.updatePassword(
+                userDetails.getMemberId(),
+                passwordForm.getPassword()
+        );
+
         return "redirect:/";
     }
 

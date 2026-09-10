@@ -78,4 +78,22 @@ public class MemberService {
                 .map(this::mapToMemberDTO);
     }
 
+    public boolean checkPassword(Long id, String password){
+        Member member = memberRepository.findById(id)
+                .orElseThrow();
+        return passwordEncoder.matches(
+                password,
+                member.getPassword()
+        );
+    }
+
+    public void updatePassword(Long id, String password){
+        Member member = memberRepository.findById(id)
+                .orElseThrow();
+        member.setPassword(
+                passwordEncoder.encode(password)
+        );
+
+        memberRepository.save(member);
+    }
 }
