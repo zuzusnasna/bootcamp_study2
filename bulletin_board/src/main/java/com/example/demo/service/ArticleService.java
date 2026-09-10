@@ -100,4 +100,18 @@ public class ArticleService {
         // 저장한 Article Entity를 화면에서 사용할 ArticleDTO로 변환하여 반환한다.
         return mapToArticleDTO(article);
     }
+
+    public ArticleDTO update(ArticleForm articleForm) {
+
+        Article article = articleRepository
+                .findById(articleForm.getId())
+                .orElseThrow();
+
+        article.setTitle(articleForm.getTitle());
+        article.setDescription(articleForm.getDescription());
+
+        articleRepository.save(article);
+
+        return mapToArticleDTO(article);
+    }
 }

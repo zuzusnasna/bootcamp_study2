@@ -94,7 +94,6 @@ public class ArticleController {
         // 제목에 금칙어가 포함되어 있는지 추가로 검사한다.
         if (articleForm.getTitle() != null &&
                 articleForm.getTitle().contains("ㅆㅃ")) {
-
             // 제목 필드에 직접 오류를 추가하여 화면에서 제목 오류로 표시되도록 한다.
             bindingResult.rejectValue(
                     "title",
@@ -102,11 +101,9 @@ public class ArticleController {
                     "욕하면 안되지"
             );
         }
-
         // 게시글 내용에 금칙어가 포함되어 있는지 추가로 검사한다.
         if (articleForm.getDescription() != null &&
                 articleForm.getDescription().contains("ㅆㅃ")) {
-
             // description 필드에 직접 오류를 추가하여 화면에서 내용 오류로 표시되도록 한다.
             bindingResult.rejectValue(
                     "description",
@@ -114,20 +111,44 @@ public class ArticleController {
                     "욕하면 안되지"
             );
         }
-
         // 기본 validation 또는 금칙어 검사에서 오류가 하나라도 있으면 저장하지 않는다.
         // 작성 화면으로 다시 이동하면서 BindingResult의 오류 정보를 View에 전달한다.
         if (bindingResult.hasErrors()) {
             return "article-add";
         }
-
         // 검증을 모두 통과한 경우 현재 로그인한 회원의 ID와 작성 폼을 Service에 전달하여 게시글을 생성한다.
         articleService.create(
                 userDetails.getMemberId(),
                 articleForm
         );
-
         // 게시글 작성이 완료되면 게시글 목록으로 리다이렉트한다.
         return "redirect:/article/list";
+    }
+
+    @GetMapping("/edit")
+    public String getArticleEdit(
+            @RequestParam("id") Long id,
+            @ModelAttribute("article") ArticleForm articleForm,
+            Model model) {
+
+        ArticleDTO articleDto = articleService.findById(id);
+
+        articleForm.setId(articleDto.getId());
+        articleForm.setTitle(articleDto.getTitle());
+        articleForm.setDescription(articleDto.getDescription());
+
+        return "article-edit";
+    }
+
+    @PostMapping("/edit")
+    public String postArticleEdit(
+            @Valid @ModelAttribute("article") ArticleForm articleForm,
+            BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "article - edit";
+        }
+        articleService.update(articleForm);
+        return "redirect:/article/content?id = +" + articleForm.getId();
     }
 }
