@@ -34,7 +34,8 @@ public class SecurityConfiguration {
                         // 로그인하지 않아도 누구나 접근할 수 있는 URL
                         "/",
                         "/article/list",
-                        "/article/content"
+                        "/article/content",
+                        "/image/**"
                 ).permitAll()
                         // /member/** 경로는 ROLE_ADMIN 권한을 가진 사용자만 접근 가능
                         .requestMatchers("/member/**")
@@ -52,7 +53,7 @@ public class SecurityConfiguration {
                         // 직접 만든 로그인 페이지의 URL
                         .loginPage("/login")
                         // 로그인 성공 후 이동할 기본 URL
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
                         // 로그인 페이지 자체는 인증 없이 접근 가능
                         .permitAll()
                 )
@@ -60,8 +61,12 @@ public class SecurityConfiguration {
                 .logout(logout -> logout
                         // 로그아웃 요청 URL
                         .logoutUrl("/logout")
-                        // 로그아웃 성공 후 이동할 URL
-                        .logoutSuccessUrl("/")
+                        // 로그아웃 성공 후 로그인 화면으로 이동
+                        .logoutSuccessUrl("/login")
+                        // 로그아웃 시 세션을 무효화
+                        .invalidateHttpSession(true)
+                        // 인증 정보를 삭제
+                        .clearAuthentication(true)
                         // 로그아웃 기능은 인증 여부와 관계없이 접근 가능
                         .permitAll()
                 );
