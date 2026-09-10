@@ -14,10 +14,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+// 회원 목록 조회, 회원 정보 수정, 회원 삭제 요청을 처리하는 Controller이다.
+// 실제 회원 데이터의 조회/수정/삭제 작업은 MemberService가 담당한다.
 @Controller
+// final 필드를 생성자로 주입받을 수 있도록 생성자를 자동으로 만들어 준다.
 @RequiredArgsConstructor
+// 이 Controller의 요청 URL 앞에 '/member'를 붙인다.
 @RequestMapping("/member")
 public class MemberController {
+
+    // 회원 관련 비즈니스 로직을 처리하는 Service를 주입받는다.
     private final MemberService memberService;
 
     // '/member/list'로 들어오는 GET 요청을 처리하여 회원 목록을 조회한다.
@@ -28,13 +34,15 @@ public class MemberController {
                     size = 10,
                     sort = "id",
                     direction = Sort.Direction.DESC)
+            // 요청 URL의 page, size 등의 정보를 바탕으로 페이징 조건을 전달받는다.
             Pageable pageable,
+            // 조회한 회원 목록을 View에 전달하기 위한 객체이다.
             Model model){
 
-        // 페이지 정보와 함께 회원 목록을 Service에서 조회한다.
+        // 페이징 조건을 Service에 전달하여 회원 목록을 조회한다.
         Page<MemberDTO> page = memberService.findAll(pageable);
 
-        // 조회한 회원 목록을 'page'라는 이름으로 View에 전달한다.
+        // 조회한 회원 페이지 정보를 'page'라는 이름으로 View에 전달한다.
         model.addAttribute("page", page);
         // Thymeleaf가 회원 목록 화면을 렌더링하도록 View 이름을 반환한다.
         return "member-list";
@@ -46,9 +54,9 @@ public class MemberController {
             // 수정할 회원의 ID를 요청 파라미터로 전달받는다.
             @RequestParam("id") Long id,
             // 수정 화면에서 사용할 MemberForm 객체를 생성한다.
-            @ModelAttribute("member")MemberForm memberForm){
+            @ModelAttribute("member") MemberForm memberForm){
 
-        // 회원 ID를 Service에 전달하여 기존 회원 정보를 조회한다.
+        // 회원 ID를 Service에 전달하여 DB에 저장된 기존 회원 정보를 조회한다.
         MemberDTO memberDTO = memberService.findById(id);
 
         // 조회한 회원 정보를 수정 폼에 채워 기존 값을 화면에 표시한다.
