@@ -214,6 +214,36 @@ templates/*.html
 
 ---
 
+## 🚀 주요 작업물
+
+지금까지 학습 과정에서 직접 구현한 주요 프로젝트를 정리했습니다.
+
+| 작업물 | 설명 | 주요 기술 | Repository |
+|---|---|---|---|
+| 🎮 **GAMEHUB** | 게임 카테고리 기반 커뮤니티 웹 애플리케이션 | Java · Servlet · Oracle · JavaScript | [GitHub](https://github.com/zuzusnasna/miniproject) |
+| 🏭 **Equipment Management** | 장비 등록·조회·수정·삭제 및 검색·필터 기능을 제공하는 장비 관리 시스템 | Spring Boot · JPA · Oracle · React | [GitHub](https://github.com/zuzusnasna/equipment-management) |
+| 📝 **Bulletin Board** | Spring Boot 기반 게시판 구현 실습 | Spring Boot · JPA · Thymeleaf · Spring Security · H2 | [소스 코드](./bulletin_board) |
+
+### 📝 Bulletin Board 구현
+
+게시판 구현은 단순 CRUD를 넘어 **Spring Boot 웹 애플리케이션의 전체 흐름을 직접 구현하는 것을 목표**로 진행했습니다.
+
+- 회원가입 / 로그인 / 로그아웃
+- BCrypt 비밀번호 암호화
+- 게시글 CRUD 및 페이징
+- 작성자 기반 게시글 수정 / 삭제
+- `ROLE_ADMIN` 관리자 권한 처리
+- Validation / `BindingResult`
+- `@AuthenticationPrincipal`을 이용한 로그인 사용자 연결
+- `@Transactional`을 이용한 회원 및 게시글 삭제 처리
+- Controller → Service → Repository → Database 구조 이해
+
+자세한 구현 내용과 실행 확인 과정은 아래 게시판 실습 문서에서 확인할 수 있습니다.
+
+➡️ [게시판 구현 실습 상세 내용](#-bulletin-board-실습)
+
+---
+
 ## 🎯 Goal
 
 학습한 내용을 단순히 기록하는 데서 끝내지 않고, 직접 코드를 작성하고 정리하면서 **Spring Boot 기반 백엔드 개발 흐름을 이해하는 것**을 목표로 합니다.
