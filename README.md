@@ -107,6 +107,8 @@ bootcamp_study2/
 
 `bulletin_board`는 날짜별 학습 기록과 별도로 진행한 **Spring Boot 게시판 구현 실습 프로젝트**이다.
 
+👉 [게시판 구현 원리 및 핵심 내용 정리](./bulletin_board/README.md)
+
 ### 구현 기능
 
 - 게시글 목록 및 페이징
