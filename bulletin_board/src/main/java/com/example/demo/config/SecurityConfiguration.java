@@ -33,8 +33,8 @@ public class SecurityConfiguration {
                 authorizationManagerRequestMatcherRegistry.requestMatchers(
                         // 로그인하지 않아도 누구나 접근할 수 있는 URL
                         "/",
-                        "/articles/list",
-                        "/articles/content"
+                        "/article/list",
+                        "/article/content"
                 ).permitAll()
                         // /member/** 경로는 ROLE_ADMIN 권한을 가진 사용자만 접근 가능
                         .requestMatchers("/member/**")
