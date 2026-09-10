@@ -70,19 +70,34 @@ public class ArticleService {
                 .orElseThrow();
     }
 
+    // 로그인한 회원의 ID와 작성 폼을 이용하여 새로운 게시글을 생성한다.
     public ArticleDTO create(
+            // 게시글 작성자로 연결할 회원의 ID
             Long memberId,
+            // 사용자가 입력한 게시글 제목과 내용을 담은 폼 객체
             ArticleForm articleForm){
+
+        // 회원 ID로 실제 회원 Entity를 조회한다.
+        // 게시글의 작성자(Member)와 연결하기 위해 Entity가 필요하다.
         Member member = memberRepository.findById(memberId)
+                // 해당 ID의 회원이 존재하지 않으면 예외를 발생시킨다.
                 .orElseThrow();
 
+        // Article Builder를 사용하여 새 게시글 Entity를 만든다.
         Article article = Article.builder()
+                // 작성 폼에서 입력받은 제목을 게시글에 저장한다.
                 .title(articleForm.getTitle())
+                // 작성 폼에서 입력받은 내용을 게시글에 저장한다.
                 .description(articleForm.getDescription())
+                // 조회한 회원 Entity를 게시글 작성자로 연결한다.
                 .member(member)
+                // Builder 설정을 끝내고 Article Entity를 생성한다.
                 .build();
 
+        // 완성된 Article Entity를 Repository를 통해 DB에 저장한다.
         articleRepository.save(article);
+
+        // 저장한 Article Entity를 화면에서 사용할 ArticleDTO로 변환하여 반환한다.
         return mapToArticleDTO(article);
     }
 }
