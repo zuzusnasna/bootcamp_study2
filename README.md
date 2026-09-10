@@ -23,6 +23,8 @@ Spring Boot
        ↓
      CRUD / 인증·인가
        ↓
+     Profile / 환경별 설정
+       ↓
      배포 / JAR · WAR
 ```
 
@@ -37,7 +39,7 @@ Spring Boot
 | [2026-09-07](./study/2026-09-07.md) | JPA · CRUD |
 | [2026-09-08](./study/2026-09-08.md) | JSP · MVC · RESTful API · Thymeleaf · JPA 연관관계 |
 | [2026-09-09](./study/2026-09-09.md) | 회원 수정 · Spring Security 인증/인가 · UserDetailsService · BCrypt |
-| [2026-09-10](./study/2026-09-10.md) | Spring Boot 배포 · JAR/WAR · 외부 Tomcat · Profile · H2 · REST API |
+| [2026-09-10](./study/2026-09-10.md) | Spring Boot 배포 · JAR/WAR · Profile · H2 · REST API · 환경별 설정 |
 
 ---
 
@@ -56,7 +58,7 @@ Spring Boot
 | `mvc1` | Spring MVC 실습 |
 | `mvc2` | Spring MVC 실습 완료 |
 | `security1` | Spring Security 인증 · 인가 실습 완료 |
-| `deployment` | Spring Boot JAR · WAR 생성 및 외부 Tomcat 배포 실습 |
+| `deployment` | Spring Boot JAR · WAR · Profile · H2 및 외부 Tomcat 배포 실습 |
 
 ---
 
@@ -70,6 +72,7 @@ Spring Boot
 - **Database** · H2
 - **Build** · Gradle
 - **Deployment** · JAR · WAR · Tomcat
+- **Configuration** · Spring Profile · `spring.profiles.active`
 - **IDE** · IntelliJ IDEA
 - **Version Control** · Git · GitHub
 
@@ -91,7 +94,7 @@ bootcamp_study2/
 ├── mvc1/        # Spring MVC 실습
 ├── mvc2/        # Spring MVC 실습
 ├── security1/   # Spring Security 인증 · 인가 실습
-└── deployment/  # Spring Boot JAR · WAR 및 Tomcat 배포 실습
+└── deployment/  # Spring Boot JAR · WAR · Profile 및 Tomcat 배포 실습
 ```
 
 ---
