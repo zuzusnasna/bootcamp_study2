@@ -6,8 +6,11 @@ import com.example.demo.model.Member;
 import com.example.demo.repository.ArticleRepository;
 import com.example.demo.repository.AuthorityRepository;
 import com.example.demo.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -105,5 +108,43 @@ public class MemberService {
 
         // 변경된 회원 정보를 DB에 저장한다.
         memberRepository.save(member);
+    }
+
+    public Page<MemberDTO> findAll(Pageable pageable){
+        return memberRepository.findAll(pageable)
+                .map((this::mapToMemberDTO));
+    }
+
+    public MemberDTO patch(MemberForm memberForm){
+        Member member = memberRepository
+                .findById(memberForm.getId())
+                .orElseThrow();
+
+        if(memberForm.getName() != null){
+            member.setName(memberForm.getName());
+        }
+        if (memberForm.getPassword() != null){
+            member.setPassword(
+                    passwordEncoder.encode(
+                            memberForm.getPassword()
+                    )
+            );
+        }
+        if (memberForm.getEmail() != null){
+            member.setEmail(memberForm.getEmail());
+        }
+        memberRepository.save(member);
+        return mapToMemberDTO(member);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+
+        Member member = memberRepository
+                .findById(id)
+                .orElseThrow();
+
+        articleRepository.deleteAllByMember(member);
+        memberRepository.delete(member);
     }
 }
