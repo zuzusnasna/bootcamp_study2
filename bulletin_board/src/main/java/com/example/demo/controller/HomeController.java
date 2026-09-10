@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.MemberForm;
 import com.example.demo.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 // 게시판 사이트의 기본 페이지 이동 요청을 처리하는 Controller이다.
 //
@@ -23,7 +27,7 @@ public class HomeController {
 
     // 사이트의 기본 주소('/')로 접속했을 때 실행된다.
     @GetMapping("/")
-    public String getHome(){
+    public String getHome() {
         // 게시판의 글 목록 페이지로 요청을 다시 전달한다.
         // 별도의 홈 화면을 만들지 않고 게시판 목록을 첫 화면으로 사용한다.
         return "forward:/article/list";
@@ -31,15 +35,54 @@ public class HomeController {
 
     // 사용자가 '/login' 주소로 접속했을 때 실행된다.
     @GetMapping("/login")
-    public String getLogin(){
+    public String getLogin() {
         // login.html 화면을 보여주도록 View 이름을 반환한다.
         return "login";
     }
 
     // 사용자가 '/logout' 주소로 접속했을 때 실행된다.
     @GetMapping("/logout")
-    public String getLogout(){
+    public String getLogout() {
         // logout.html 화면을 보여주도록 View 이름을 반환한다.
         return "logout";
     }
+
+    @GetMapping("/dignup")
+    public String getMemberAdd(
+            @Valid @ModelAttribute("member") MemberForm memberForm,
+            BindingResult bindingResult) {
+
+        if (memberForm.getPassword() == null ||
+                memberForm.getPassword().trim().length() < 8) {
+            bindingResult.rejectValue(
+                    "password",
+                    "NotBlank",
+                    "패스워드를 8글자 이상 입력하세요."
+            );
+        }
+        if (!memberForm.getPassword().equals(memberForm.getPasswordConfirm())) {
+
+            bindingResult.rejectValue(
+                    "passwordConfirm",
+                    "MissMatch",
+                    "입력하신 패스워드가 다릅니다."
+            );
+        }
+
+        if (memberService.findByEmail(
+                memberForm.getEmail()).isPresent()) {
+
+            bindingResult.rejectValue(
+                    "email",
+                    "AlreadyExist",
+                    "사용중인 이메일 입니다."
+            );
+        }
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
+        memberService.create(memberForm);
+        return "redirect:/";
+    }
+
 }
