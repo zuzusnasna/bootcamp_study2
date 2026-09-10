@@ -11,10 +11,13 @@ import com.example.demo.repository.MemberRepository;
 // final 필드를 생성자 주입받을 수 있도록 생성자를 자동 생성하는 Lombok 애너테이션
 import lombok.RequiredArgsConstructor;
 // 이 클래스를 Spring의 Service Bean으로 등록하는 애너테이션
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableArgumentResolver;
 import org.springframework.stereotype.Service;
 
 // 여러 게시글을 목록으로 반환하기 위해 List를 사용한다.
-import java.util.List;
+
 
 // 게시글과 관련된 비즈니스 로직을 담당하는 Service
 @Service
@@ -27,6 +30,7 @@ public class ArticleService {
 
     // 게시글 데이터를 DB에서 조회하거나 저장할 때 사용하는 Repository
     private final ArticleRepository articleRepository;
+    private final PageableArgumentResolver pageableArgumentResolver;
 
     // DB에서 사용하는 Article Entity를 화면에 전달할 ArticleDTO로 변환하는 메서드
     private ArticleDTO mapToArticleDTO(Article article){
@@ -53,14 +57,12 @@ public class ArticleService {
     }
 
     // DB에 저장된 모든 게시글을 조회하여 화면에서 사용할 DTO 목록으로 반환한다.
-    public List<ArticleDTO> findAll(){
+    public Page<ArticleDTO> findAll(Pageable pageable){
         // ArticleRepository를 통해 DB의 모든 Article Entity를 조회한다.
-        return articleRepository.findAll()
-                // 조회된 Entity 목록을 Stream으로 변환하여 하나씩 처리한다.
-                .stream()
+        return articleRepository.findAll(pageable)
                 // 각 Article Entity를 위에서 만든 mapToArticleDTO()를 이용해 DTO로 변환한다.
-                .map(this::mapToArticleDTO)
-                // 변환된 DTO들을 다시 List 형태로 모은다.
-                .toList();
+                .map(this::mapToArticleDTO);
+
+
     }
 }

@@ -9,6 +9,10 @@ import lombok.RequiredArgsConstructor;
 // 현재 클래스에서 로그를 사용할 수 있도록 Logger를 자동 생성하는 Lombok 애너테이션
 import lombok.extern.slf4j.Slf4j;
 // 해당 클래스를 Spring MVC Controller로 등록하는 애너테이션
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 // Controller에서 화면으로 데이터를 전달할 때 사용하는 객체
 import org.springframework.ui.Model;
@@ -35,16 +39,14 @@ public class ArticleController {
 
     // '/article/list'로 들어오는 GET 요청을 처리한다.
     @GetMapping("/list")
-    public String getArticleList(Model model){
+    public String getArticleList(@PageableDefault(
+            size = 10,
+            sort = "id",
+            direction = Sort.Direction.DESC)
+                                     Pageable pageable, Model model){
+        Page<ArticleDTO> page = articleService.findAll(pageable);
 
-        // Service에서 DB의 게시글을 조회하고 화면에 전달할 DTO 목록으로 받아온다.
-        List<ArticleDTO> articles = articleService.findAll();
-
-        // 조회한 게시글 목록을 'articles'라는 이름으로 Model에 저장한다.
-        // View에서는 이 이름을 사용하여 게시글 목록을 화면에 출력할 수 있다.
-        model.addAttribute("articles", articles);
-
-        // Thymeleaf가 article-list.html 화면을 렌더링하도록 View 이름을 반환한다.
+        model.addAttribute("page", page);
         return "article-list";
     }
 }
