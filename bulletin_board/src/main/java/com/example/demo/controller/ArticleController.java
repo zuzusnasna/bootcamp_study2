@@ -166,4 +166,11 @@ public class ArticleController {
         // 수정이 완료되면 수정한 게시글의 상세 화면으로 이동한다.
         return "redirect:/article/content?id = +" + articleForm.getId();
     }
+
+    @GetMapping("/delete")
+    public String getArticleDelete(
+            @RequestParam("id") Long id){
+        articleService.delete(id);
+        return "redirect:/article/list";
+    }
 }

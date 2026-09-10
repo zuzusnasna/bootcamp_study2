@@ -114,4 +114,10 @@ public class ArticleService {
 
         return mapToArticleDTO(article);
     }
+
+    public void delete(Long id){
+        Article article = articleRepository
+                .findById(id)
+                .orElseThrow();
+    }
 }
