@@ -167,10 +167,14 @@ public class ArticleController {
         return "redirect:/article/content?id = +" + articleForm.getId();
     }
 
+    // '/article/delete?id=게시글ID'로 들어오는 GET 요청을 처리하여 게시글 삭제 작업을 요청한다.
     @GetMapping("/delete")
     public String getArticleDelete(
+            // 삭제할 게시글의 ID를 요청 파라미터로 전달받는다.
             @RequestParam("id") Long id){
+        // 게시글 ID를 Service에 전달하여 삭제에 필요한 게시글 조회 작업을 수행한다.
         articleService.delete(id);
+        // 삭제 요청이 끝나면 게시글 목록 화면으로 이동한다.
         return "redirect:/article/list";
     }
 }
