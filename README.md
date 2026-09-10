@@ -85,7 +85,7 @@ Spring Boot
 
 ```text
 bootcamp_study2/
-├── study/            # 날짜별 학습 기록
+├── study/            # 날짜별 학습 기록 및 Bulletin Board 정리
 ├── aop/              # AOP 실습
 ├── di/               # DI / IoC 실습
 ├── jdbc/             # JDBC 실습
@@ -107,7 +107,7 @@ bootcamp_study2/
 
 `bulletin_board`는 날짜별 학습 기록과 별도로 진행한 **Spring Boot 게시판 구현 실습 프로젝트**이다.
 
-👉 [게시판 구현 원리 및 핵심 내용 정리](./bulletin_board/README.md)
+👉 [Bulletin Board 구현 원리 및 핵심 내용 정리](./study/Bulletin%20Board.md)
 
 ### 구현 기능
 
@@ -129,4 +129,4 @@ bootcamp_study2/
 
 학습한 내용을 단순히 기록하는 데서 끝내지 않고, 직접 코드를 작성하고 정리하면서 **Spring Boot 기반 백엔드 개발 흐름을 이해하는 것**을 목표로 합니다.
 
-날짜별 학습 기록은 `study/`에서 확인하고, 게시판 구현 과정은 `bulletin_board/`에서 확인할 수 있습니다.
+날짜별 학습 기록은 `study/`에서 확인하고, 게시판 구현 원리와 핵심 내용은 `study/Bulletin Board.md`에서 확인할 수 있습니다.
