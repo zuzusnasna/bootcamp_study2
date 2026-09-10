@@ -41,7 +41,7 @@ Spring Boot
 | [2026-09-07](./study/2026-09-07.md) | JPA · CRUD |
 | [2026-09-08](./study/2026-09-08.md) | JSP · MVC · RESTful API · Thymeleaf · JPA 연관관계 |
 | [2026-09-09](./study/2026-09-09.md) | 회원 수정 · Spring Security 인증/인가 · UserDetailsService · BCrypt |
-| [2026-09-10](./study/2026-09-10.md) | Spring Boot 배포 · JAR/WAR · Profile · H2 · REST API · 환경별 설정 |
+| [2026-09-10](./study/2026-09-10.md) | Spring Boot 배포 · JAR/WAR · Profile · H2 · REST API · 환경별 설정 · Bulletin Board 게시판 구현 |
 
 ---
 
