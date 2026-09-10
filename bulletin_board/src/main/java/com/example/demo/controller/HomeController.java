@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 // 게시판 사이트의 기본 페이지 이동 요청을 처리하는 Controller이다.
 //
-// 브라우저가 '/', '/login', '/logout', '/signup', '/password' 같은 주소로 요청을 보내면
+// 브라우저가 '/', '/login', '/signup', '/password' 같은 주소로 요청을 보내면
 // 이 클래스가 요청을 받아 적절한 페이지나 기능으로 연결해 준다.
 // 실제 회원 데이터 처리는 Service가 담당하고,
 // 이 클래스는 HTTP 요청을 받아 Service와 화면을 연결하는 역할을 한다.
@@ -42,12 +42,8 @@ public class HomeController {
         return "login";
     }
 
-    // 사용자가 '/logout' 주소로 접속했을 때 실행된다.
-    @GetMapping("/logout")
-    public String getLogout() {
-        // logout.html 화면을 보여주도록 View 이름을 반환한다.
-        return "logout";
-    }
+    // '/logout'은 Spring Security가 POST 요청으로 처리한다.
+    // 별도의 로그아웃 확인 페이지를 Controller에서 처리하지 않는다.
 
     // 사용자가 '/signup' 주소로 접속했을 때 회원가입 화면을 보여준다.
     @GetMapping("/signup")
