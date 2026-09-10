@@ -47,7 +47,7 @@ public class HomeController {
         return "logout";
     }
 
-    @GetMapping("/dignup")
+    @GetMapping("/signup")
     public String getMemberAdd(
             @Valid @ModelAttribute("member") MemberForm memberForm,
             BindingResult bindingResult) {
