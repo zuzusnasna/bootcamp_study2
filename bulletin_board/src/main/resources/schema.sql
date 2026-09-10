@@ -18,8 +18,8 @@ CREATE TABLE article (
                          id INTEGER AUTO_INCREMENT PRIMARY KEY,
                          title VARCHAR(256),
                          description VARCHAR(4096),
-                         created DATETIME,
-                         updated DATETIME,
+                         created TIMESTAMP,
+                         updated TIMESTAMP,
                          member_id INTEGER,
                          FOREIGN KEY(member_id) REFERENCES member(id) --member.id참조
 ); --N
