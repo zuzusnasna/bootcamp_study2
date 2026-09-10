@@ -125,30 +125,45 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
+    // '/article/edit?id=게시글ID'로 들어오는 GET 요청을 처리하여 게시글 수정 화면을 보여준다.
     @GetMapping("/edit")
     public String getArticleEdit(
+            // 수정할 게시글의 ID를 요청 파라미터로 전달받는다.
             @RequestParam("id") Long id,
+            // 수정 폼에서 사용할 ArticleForm 객체를 생성한다.
             @ModelAttribute("article") ArticleForm articleForm,
+            // 수정할 게시글 정보를 View에 전달하기 위한 객체
             Model model) {
 
+        // 게시글 ID를 Service에 전달하여 기존 게시글 정보를 조회한다.
         ArticleDTO articleDto = articleService.findById(id);
 
+        // 조회한 게시글 정보를 수정 폼에 채워 기존 내용을 화면에 표시할 수 있도록 한다.
         articleForm.setId(articleDto.getId());
         articleForm.setTitle(articleDto.getTitle());
         articleForm.setDescription(articleDto.getDescription());
 
+        // Thymeleaf가 게시글 수정 화면인 article-edit.html을 렌더링하도록 View 이름을 반환한다.
         return "article-edit";
     }
 
+    // '/article/edit'로 들어오는 POST 요청을 처리하여 게시글을 수정한다.
     @PostMapping("/edit")
     public String postArticleEdit(
+            // 수정 폼 데이터를 ArticleForm에 담고 @Valid를 통해 입력값을 검증한다.
             @Valid @ModelAttribute("article") ArticleForm articleForm,
+            // @Valid에서 발생한 검증 오류를 확인하기 위한 객체
             BindingResult bindingResult){
 
+        // 입력값 검증에 오류가 있으면 게시글을 수정하지 않고 수정 화면으로 돌아간다.
         if(bindingResult.hasErrors()){
             return "article - edit";
         }
+
+        // 검증을 통과한 수정 내용을 Service에 전달하여 기존 게시글을 업데이트한다.
         articleService.update(articleForm);
+
+        // 수정이 완료되면 수정한 게시글의 상세 화면으로 이동한다.
         return "redirect:/article/content?id = +" + articleForm.getId();
     }
 }
