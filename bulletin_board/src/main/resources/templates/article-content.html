@@ -2,7 +2,7 @@
 <html lang="ko"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{base-layout::layout(~{::section})}">
+      th:replace="~{base-layout::layout(~{::section})}" xmlns:sec="">
 <body>
 <section class="container">
     <h1>게시판</h1>
@@ -26,11 +26,11 @@
             </tr>
             <tr>
                 <td>글쓴일</td>
-                <td th:text="${#temporals.format(article.created,'yyyy-MM-dd HH:mm:ss')}">2024-06-30 09:03:18</td>
+                <td th:text="${#dates.format(article.created,'yyyy-MM-dd HH:mm:ss')}">2024-06-30 09:03:18</td>
             </tr>
             <tr>
                 <td>수정일</td>
-                <td th:text="${#temporals.format(article.updated,'yyyy-MM-dd HH:mm:ss')}">2024-06-30 10:10:25</td>
+                <td th:text="${#dates.format(article.updated,'yyyy-MM-dd HH:mm:ss')}">2024-06-30 10:10:25</td>
             </tr>
         </tbody>
     </table>
@@ -39,7 +39,7 @@
     <a type="button" class="btn btn-warning btn-sm" th:href="@{/article/edit(id=${article.id})}">수정</a>
     <a type="button" class="btn btn-danger btn-sm" th:href="@{/article/delete(id=${article.id})}">삭제</a>
     -->
-    <th:block sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == article.getMemberId}">
+    <th:block sec:authorize="isAuthenticated()" th:if="${#authentication.principal.memberId == article.getMemberId}">
         <a type="button" class="btn btn-warning btn-sm" th:href="@{/article/edit(id=${article.id})}">수정</a>
         <a type="button" class="btn btn-danger btn-sm" th:href="@{/article/delete(id=${article.id})}">삭제</a>
     </th:block>

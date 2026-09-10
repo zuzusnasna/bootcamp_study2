@@ -157,14 +157,14 @@ public class ArticleController {
 
         // 입력값 검증에 오류가 있으면 게시글을 수정하지 않고 수정 화면으로 돌아간다.
         if(bindingResult.hasErrors()){
-            return "article - edit";
+            return "article-edit";
         }
 
         // 검증을 통과한 수정 내용을 Service에 전달하여 기존 게시글을 업데이트한다.
         articleService.update(articleForm);
 
         // 수정이 완료되면 수정한 게시글의 상세 화면으로 이동한다.
-        return "redirect:/article/content?id = +" + articleForm.getId();
+        return "redirect:/article/content?id = " + articleForm.getId();
     }
 
     // '/article/delete?id=게시글ID'로 들어오는 GET 요청을 처리하여 게시글 삭제 작업을 요청한다.
