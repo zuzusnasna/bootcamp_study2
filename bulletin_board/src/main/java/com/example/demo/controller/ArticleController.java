@@ -69,21 +69,31 @@ public class ArticleController {
         return "article-content";
     }
 
+    // '/article/add'로 들어오는 GET 요청을 처리하여 게시글 작성 화면을 보여준다.
     @GetMapping("/add")
     public String getArticleAdd(
-            @ModelAttribute("article")ArticleForm articleForm){
+            // 폼 입력값을 ArticleForm 객체에 담고 View에서는 'article'이라는 이름으로 사용한다.
+            @ModelAttribute("article") ArticleForm articleForm){
+
+        // Thymeleaf가 게시글 작성 화면인 article-add.html을 렌더링하도록 View 이름을 반환한다.
         return "article-add";
     }
 
+    // '/article/add'로 들어오는 POST 요청을 처리하여 게시글을 등록한다.
     @PostMapping("/add")
     public String postArticleAdd(
-            @ModelAttribute("article")ArticleForm articleForm,
+            // 사용자가 입력한 제목과 내용을 ArticleForm에 담아서 전달받는다.
+            @ModelAttribute("article") ArticleForm articleForm,
+            // Spring Security가 인증한 현재 사용자의 정보를 주입받는다.
             @AuthenticationPrincipal MemberUserDetails userDetails){
 
+        // 로그인한 회원의 ID와 작성 폼을 Service에 전달하여 게시글을 생성한다.
         articleService.create(
                 userDetails.getMemberId(),
                 articleForm
         );
+
+        // 게시글 작성이 끝나면 게시글 목록으로 이동한다.
         return "redirect:/article/list";
     }
 }
