@@ -103,6 +103,14 @@ bootcamp_study2/
 
 ---
 
+## 💼 Projects
+
+1. 🎮 **GAMEHUB** → [`miniproject`](https://github.com/zuzusnasna/miniproject) 연결
+2. 🏭 **Equipment Management** → [`equipment-management`](https://github.com/zuzusnasna/equipment-management) 연결
+3. 📝 **Bulletin Board** → [`bulletin_board`](./bulletin_board) 연결
+
+---
+
 ## 📝 Bulletin Board 실습
 
 `bulletin_board`는 날짜별 학습 기록과 별도로 진행한 **Spring Boot 게시판 구현 실습 프로젝트**이다.
