@@ -15,7 +15,7 @@ import java.util.Optional;
 
 // 회원과 관련된 비즈니스 로직을 처리하는 Service 클래스이다.
 // Controller가 직접 Repository를 호출하지 않고 Service를 거치도록 하여
-// 회원가입, 회원 조회 같은 실제 업무 처리를 한곳에서 담당한다.
+// 회원가입, 회원 조회, 비밀번호 변경 같은 실제 업무 처리를 담당한다.
 @Builder
 @Service
 @RequiredArgsConstructor
@@ -31,8 +31,8 @@ public class MemberService {
     // 현재 클래스에서는 직접 사용하지 않지만 회원 기능 확장을 위해 주입되어 있다.
     private final AuthorityRepository authorityRepository;
 
-    // 회원가입 시 평문 비밀번호를 안전하게 암호화하기 위해 사용한다.
-    // 비밀번호를 DB에 그대로 저장하지 않는 것이 중요하다.
+    // 회원가입과 비밀번호 변경 시 비밀번호를 암호화하거나 비교하기 위해 사용한다.
+    // 평문 비밀번호를 DB에 그대로 저장하지 않기 위해 필요하다.
     private final PasswordEncoder passwordEncoder;
 
     // 회원 번호로 회원을 조회한다.
@@ -78,22 +78,32 @@ public class MemberService {
                 .map(this::mapToMemberDTO);
     }
 
+    // 사용자가 입력한 기존 비밀번호가 DB에 저장된 비밀번호와 일치하는지 확인한다.
     public boolean checkPassword(Long id, String password){
+        // 먼저 회원 번호로 변경 대상 회원을 조회한다.
         Member member = memberRepository.findById(id)
                 .orElseThrow();
+
+        // 평문으로 입력받은 비밀번호와 암호화되어 저장된 비밀번호를 비교한다.
+        // 암호화된 문자열을 직접 비교하지 않고 PasswordEncoder의 matches()를 사용한다.
         return passwordEncoder.matches(
                 password,
                 member.getPassword()
         );
     }
 
+    // 회원의 비밀번호를 새로운 비밀번호로 변경한다.
     public void updatePassword(Long id, String password){
+        // 회원 번호로 비밀번호를 변경할 회원을 조회한다.
         Member member = memberRepository.findById(id)
                 .orElseThrow();
+
+        // 새로운 비밀번호도 DB에 저장하기 전에 반드시 암호화한다.
         member.setPassword(
                 passwordEncoder.encode(password)
         );
 
+        // 변경된 회원 정보를 DB에 저장한다.
         memberRepository.save(member);
     }
 }
