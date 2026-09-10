@@ -9,7 +9,6 @@ import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableArgumentResolver;
 import org.springframework.stereotype.Service;
 
 // 게시글과 관련된 비즈니스 로직을 담당하는 Service
@@ -23,9 +22,6 @@ public class ArticleService {
 
     // 게시글 데이터를 DB에서 조회하거나 저장할 때 사용하는 Repository
     private final ArticleRepository articleRepository;
-
-    // 페이징 관련 요청 정보를 처리하기 위해 주입받은 Resolver
-    private final PageableArgumentResolver pageableArgumentResolver;
 
     // DB에서 사용하는 Article Entity를 화면에 전달할 ArticleDTO로 변환하는 메서드
     private ArticleDTO mapToArticleDTO(Article article){
@@ -122,12 +118,14 @@ public class ArticleService {
         return mapToArticleDTO(article);
     }
 
-    // 게시글 ID를 기준으로 삭제 대상 게시글을 조회한다.
+    // 게시글 ID를 기준으로 게시글을 실제 DB에서 삭제한다.
     public void delete(Long id){
-        // 전달받은 ID와 일치하는 게시글이 실제로 존재하는지 Repository에서 확인한다.
-        Article article = articleRepository
-                .findById(id)
-                // 게시글이 존재하지 않으면 예외를 발생시켜 잘못된 삭제 요청을 처리한다.
-                .orElseThrow();
+        // 존재하지 않는 게시글을 삭제하려는 경우 예외를 발생시켜 잘못된 요청을 처리한다.
+        if (!articleRepository.existsById(id)) {
+            throw new IllegalArgumentException("존재하지 않는 게시글입니다.");
+        }
+
+        // JpaRepository가 제공하는 deleteById()를 사용하여 해당 게시글을 삭제한다.
+        articleRepository.deleteById(id);
     }
 }
