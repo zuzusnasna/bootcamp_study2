@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 // 게시글 목록 화면으로 요청을 전달하는 Controller
 @Controller
@@ -48,4 +49,16 @@ public class ArticleController {
         // Thymeleaf가 article-list.html 화면을 렌더링하도록 View 이름을 반환한다.
         return "article-list";
     }
+
+    @GetMapping("/content")
+    public String getArticle(
+            @RequestParam("id") Long id,
+            Model model){
+        model.addAttribute(
+                "article",
+                articleService.findById(id)
+        );
+        return "article-content";
+    }
+    )
 }

@@ -57,4 +57,10 @@ public class ArticleService {
                 // Page의 map()을 사용하기 때문에 페이징 정보는 유지하면서 내용만 DTO로 변경된다.
                 .map(this::mapToArticleDTO);
     }
+
+    public ArticleDTO findById(Long id){
+        return articleRepository.findById(id)
+                .map(this::mapToArticleDTO)
+                .orElseThrow();
+    }
 }
