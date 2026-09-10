@@ -84,29 +84,18 @@ public class ArticleController {
     // '/article/add'로 들어오는 POST 요청을 처리하여 게시글을 등록한다.
     @PostMapping("/add")
     public String postArticleAdd(
-            // 사용자가 입력한 제목과 내용을 ArticleForm에 담아서 전달받는다.
-            @ModelAttribute("article") ArticleForm articleForm,
+            // 폼 데이터를 ArticleForm에 담고 @Valid를 통해 ArticleForm에 설정된 검증 조건을 실행한다.
+            @Valid @ModelAttribute("article") ArticleForm articleForm,
+            // @Valid에서 발생한 검증 오류와 아래에서 직접 추가한 오류를 함께 보관한다.
+            BindingResult bindingResult,
             // Spring Security가 인증한 현재 사용자의 정보를 주입받는다.
             @AuthenticationPrincipal MemberUserDetails userDetails) {
 
-        // 로그인한 회원의 ID와 작성 폼을 Service에 전달하여 게시글을 생성한다.
-        articleService.create(
-                userDetails.getMemberId(),
-                articleForm
-        );
-
-        // 게시글 작성이 끝나면 게시글 목록으로 이동한다.
-        return "redirect:/article/list";
-    }
-
-    @PostMapping("/add")
-    public String postArticleAdd(
-            @Valid @ModelAttribute("article") ArticleForm articleForm,
-            BindingResult bindingResult,
-            @AuthenticationPrincipal MemberUserDetails userDetails) {
+        // 제목에 금칙어가 포함되어 있는지 추가로 검사한다.
         if (articleForm.getTitle() != null &&
                 articleForm.getTitle().contains("ㅆㅃ")) {
 
+            // 제목 필드에 직접 오류를 추가하여 화면에서 제목 오류로 표시되도록 한다.
             bindingResult.rejectValue(
                     "title",
                     "SlangDetected",
@@ -114,9 +103,11 @@ public class ArticleController {
             );
         }
 
+        // 게시글 내용에 금칙어가 포함되어 있는지 추가로 검사한다.
         if (articleForm.getDescription() != null &&
                 articleForm.getDescription().contains("ㅆㅃ")) {
 
+            // description 필드에 직접 오류를 추가하여 화면에서 내용 오류로 표시되도록 한다.
             bindingResult.rejectValue(
                     "description",
                     "SlangDetected",
@@ -124,14 +115,19 @@ public class ArticleController {
             );
         }
 
+        // 기본 validation 또는 금칙어 검사에서 오류가 하나라도 있으면 저장하지 않는다.
+        // 작성 화면으로 다시 이동하면서 BindingResult의 오류 정보를 View에 전달한다.
         if (bindingResult.hasErrors()) {
             return "article-add";
         }
 
+        // 검증을 모두 통과한 경우 현재 로그인한 회원의 ID와 작성 폼을 Service에 전달하여 게시글을 생성한다.
         articleService.create(
                 userDetails.getMemberId(),
                 articleForm
         );
+
+        // 게시글 작성이 완료되면 게시글 목록으로 리다이렉트한다.
         return "redirect:/article/list";
     }
 }
