@@ -7,6 +7,8 @@ import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 // 게시글과 관련된 비즈니스 로직을 담당하는 Service
 @Service
 @RequiredArgsConstructor
@@ -38,5 +40,12 @@ public class ArticleService {
                 // 수정 시간
                 .updated(article.getUpdated())
                 .build();
+    }
+
+    public List<ArticleDTO> findAll(){
+        return articleRepository.findAll()
+                .stream()
+                .map(this::mapToArticleDTO)
+                .toList();
     }
 }

@@ -148,5 +148,4 @@ public class HomeController {
         // 비밀번호 변경이 완료되면 게시판의 첫 화면으로 이동한다.
         return "redirect:/";
     }
-
 }
