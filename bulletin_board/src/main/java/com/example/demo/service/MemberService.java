@@ -110,19 +110,26 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    // 페이징 조건에 맞는 회원 목록을 조회하여 DTO 페이지로 변환한다.
     public Page<MemberDTO> findAll(Pageable pageable){
+        // Repository에서 페이징된 회원 Entity를 조회한다.
         return memberRepository.findAll(pageable)
+                // 각 Member Entity를 MemberDTO로 변환하면서 페이징 정보는 유지한다.
                 .map((this::mapToMemberDTO));
     }
 
+    // 수정 폼에 입력된 값만 기존 회원 정보에 반영한다.
     public MemberDTO patch(MemberForm memberForm){
+        // 수정할 회원의 ID로 기존 회원 Entity를 조회한다.
         Member member = memberRepository
                 .findById(memberForm.getId())
                 .orElseThrow();
 
+        // 이름이 전달된 경우에만 기존 이름을 변경한다.
         if(memberForm.getName() != null){
             member.setName(memberForm.getName());
         }
+        // 비밀번호가 전달된 경우 암호화한 뒤 기존 비밀번호를 변경한다.
         if (memberForm.getPassword() != null){
             member.setPassword(
                     passwordEncoder.encode(
@@ -130,21 +137,30 @@ public class MemberService {
                     )
             );
         }
+        // 이메일이 전달된 경우에만 기존 이메일을 변경한다.
         if (memberForm.getEmail() != null){
             member.setEmail(memberForm.getEmail());
         }
+
+        // 변경된 회원 Entity를 DB에 저장한다.
         memberRepository.save(member);
+        // 수정된 회원 정보를 DTO로 변환하여 반환한다.
         return mapToMemberDTO(member);
     }
 
+    // 회원 삭제와 회원이 작성한 게시글 삭제를 하나의 트랜잭션으로 처리한다.
     @Transactional
     public void deleteById(Long id) {
 
+        // 삭제할 회원의 ID로 기존 회원 Entity를 조회한다.
         Member member = memberRepository
                 .findById(id)
+                // 존재하지 않는 회원을 삭제하려는 경우 예외를 발생시킨다.
                 .orElseThrow();
 
+        // 회원이 작성한 게시글을 먼저 삭제하여 회원과 게시글 사이의 연관 관계 문제를 방지한다.
         articleRepository.deleteAllByMember(member);
+        // 관련 게시글 삭제가 끝나면 회원 정보를 삭제한다.
         memberRepository.delete(member);
     }
 }
