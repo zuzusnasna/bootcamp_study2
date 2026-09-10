@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ArticleDTO;
+import com.example.demo.dto.ArticleForm;
 import com.example.demo.model.Article;
+import com.example.demo.model.Member;
 import com.example.demo.repository.ArticleRepository;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -66,5 +68,21 @@ public class ArticleService {
                 .map(this::mapToArticleDTO)
                 // 해당 ID의 게시글이 존재하지 않으면 예외를 발생시킨다.
                 .orElseThrow();
+    }
+
+    public ArticleDTO create(
+            Long memberId,
+            ArticleForm articleForm){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow();
+
+        Article article = Article.builder()
+                .title(articleForm.getTitle())
+                .description(articleForm.getDescription())
+                .member(member)
+                .build();
+
+        articleRepository.save(article);
+        return mapToArticleDTO(article);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ArticleDTO;
+import com.example.demo.dto.ArticleForm;
+import com.example.demo.model.MemberUserDetails;
 import com.example.demo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,11 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 // 게시글 목록과 상세 보기 화면으로 요청을 전달하는 Controller
 @Controller
@@ -66,5 +67,23 @@ public class ArticleController {
 
         // Thymeleaf가 article-content.html 화면을 렌더링하도록 View 이름을 반환한다.
         return "article-content";
+    }
+
+    @GetMapping("/add")
+    public String getArticleAdd(
+            @ModelAttribute("article")ArticleForm articleForm){
+        return "article-add";
+    }
+
+    @PostMapping("/add")
+    public String postArticleAdd(
+            @ModelAttribute("article")ArticleForm articleForm,
+            @AuthenticationPrincipal MemberUserDetails userDetails){
+
+        articleService.create(
+                userDetails.getMemberId(),
+                articleForm
+        );
+        return "redirect:/article/list";
     }
 }
