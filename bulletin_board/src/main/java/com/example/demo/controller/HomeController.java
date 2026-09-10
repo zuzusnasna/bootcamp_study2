@@ -49,13 +49,22 @@ public class HomeController {
         return "logout";
     }
 
-    // 사용자가 '/signup' 주소로 접속했을 때 회원가입 요청을 처리한다.
+    // 사용자가 '/signup' 주소로 접속했을 때 회원가입 화면을 보여준다.
     @GetMapping("/signup")
     public String getMemberAdd(
-            // @ModelAttribute로 signup 폼의 입력값을 MemberForm 객체에 담는다.
-            // @Valid를 사용하면 MemberForm에 작성한 Validation 규칙도 함께 검사한다.
+            // 회원가입 화면을 처음 열 때 입력값을 담을 MemberForm 객체를 생성한다.
+            @ModelAttribute("member") MemberForm memberForm) {
+
+        // 처음 화면을 보여주는 GET 요청에서는 입력값을 검증하거나 DB에 저장하지 않는다.
+        return "signup";
+    }
+
+    // 회원가입 폼을 제출하면 '/signup'으로 들어오는 POST 요청을 처리한다.
+    @PostMapping("/signup")
+    public String postMemberAdd(
+            // 회원가입 폼의 입력값을 MemberForm에 담고 Validation 규칙을 검사한다.
             @Valid @ModelAttribute("member") MemberForm memberForm,
-            // Validation 결과를 담고 있으며, 오류가 있으면 회원가입 화면으로 다시 보낸다.
+            // @Valid 검사 결과와 직접 추가한 검증 오류를 담는다.
             BindingResult bindingResult) {
 
         // 비밀번호가 입력되지 않았거나 8자리보다 짧은 경우 오류를 추가한다.
@@ -68,8 +77,9 @@ public class HomeController {
             );
         }
 
-        // 비밀번호와 비밀번호 확인 값이 같은지 검사한다.
-        if (!memberForm.getPassword().equals(memberForm.getPasswordConfirm())) {
+        // 비밀번호가 입력되어 있고 비밀번호 확인 값과 같은지 검사한다.
+        if (memberForm.getPassword() == null ||
+                !memberForm.getPassword().equals(memberForm.getPasswordConfirm())) {
             bindingResult.rejectValue(
                     "passwordConfirm",
                     "MissMatch",
@@ -95,6 +105,7 @@ public class HomeController {
         }
 
         // 모든 검증을 통과하면 MemberService의 create()를 호출하여 회원을 저장한다.
+        // 비밀번호 BCrypt 암호화는 MemberService에서 처리한다.
         memberService.create(memberForm);
 
         // 회원가입이 완료되면 게시판의 첫 화면으로 이동한다.
