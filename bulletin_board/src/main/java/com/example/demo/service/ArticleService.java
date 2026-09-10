@@ -101,23 +101,33 @@ public class ArticleService {
         return mapToArticleDTO(article);
     }
 
+    // ArticleForm에 담긴 게시글 ID를 기준으로 기존 게시글을 수정한다.
     public ArticleDTO update(ArticleForm articleForm) {
 
+        // 수정할 게시글 ID로 기존 Article Entity를 조회한다.
         Article article = articleRepository
                 .findById(articleForm.getId())
+                // 해당 ID의 게시글이 존재하지 않으면 예외를 발생시킨다.
                 .orElseThrow();
 
+        // 수정 폼에서 전달받은 제목으로 기존 게시글 제목을 변경한다.
         article.setTitle(articleForm.getTitle());
+        // 수정 폼에서 전달받은 내용으로 기존 게시글 내용을 변경한다.
         article.setDescription(articleForm.getDescription());
 
+        // 변경된 Article Entity를 Repository를 통해 저장한다.
         articleRepository.save(article);
 
+        // 수정된 게시글을 ArticleDTO로 변환하여 반환한다.
         return mapToArticleDTO(article);
     }
 
+    // 게시글 ID를 기준으로 삭제 대상 게시글을 조회한다.
     public void delete(Long id){
+        // 전달받은 ID와 일치하는 게시글이 실제로 존재하는지 Repository에서 확인한다.
         Article article = articleRepository
                 .findById(id)
+                // 게시글이 존재하지 않으면 예외를 발생시켜 잘못된 삭제 요청을 처리한다.
                 .orElseThrow();
     }
 }
